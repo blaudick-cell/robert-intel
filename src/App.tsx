@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { 
-  Compass, RefreshCw, Plus, TrendingUp, Clock, Target, 
-  AlertCircle, ArrowRight 
+  Compass, RefreshCw, Plus, AlertCircle, ArrowRight 
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 
