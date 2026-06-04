@@ -128,6 +128,44 @@ const activity = [
   ['Added news item', 'Denver zoning expansion alert', 'Yesterday'],
 ]
 
+const dailyBrief = {
+  generatedAt: 'Jun 4, 2026 · 8:45 AM',
+  headline: 'Today is mostly an execution day: call the Central Denver GC, price the Aurora fill route, and keep an eye on aggregate pricing pressure.',
+  confidence: '82%',
+  actions: [
+    {
+      title: 'Call Central Denver GC',
+      detail: 'High-score export lead, tight distance, near-term schedule. Worth first contact before lunch.',
+      meta: '92 fit · 4.2 mi · call today',
+      tone: 'emerald',
+    },
+    {
+      title: 'Price Aurora fill haul',
+      detail: 'Good match, but margin depends on route and receiving-site timing. Needs quick pricing sanity check.',
+      meta: '81 fit · 11 mi · bid window open',
+      tone: 'blue',
+    },
+    {
+      title: 'Watch aggregate basket',
+      detail: 'Materials index and copper are both moving up. Flag anything with locked pricing exposure.',
+      meta: '+2.4% basket · +1.9% copper',
+      tone: 'amber',
+    },
+  ],
+  sourceHealth: [
+    { name: 'Jobsite Exchange', status: 'Mock feed ready', freshness: 'Replace with API', count: '47 leads' },
+    { name: 'Market Watch', status: 'Watchlist modeled', freshness: 'Needs live prices', count: '4 signals' },
+    { name: 'News Intel', status: 'Schema ready', freshness: 'Needs RSS/search', count: '3 stories' },
+    { name: 'Action Notes', status: 'Manual queue', freshness: 'Needs persistence', count: '5 tasks' },
+  ],
+}
+
+const realDataRoadmap = [
+  'Connect Jobsite Exchange opportunities into the scoring model',
+  'Pull daily market/material signals before the morning brief',
+  'Capture news items with source, timestamp, region, and confidence',
+]
+
 function toneClasses(tone: string) {
   const map: Record<string, string> = {
     violet: 'from-violet-500/20 to-violet-500/5 text-violet-300 ring-violet-400/20',
@@ -242,6 +280,56 @@ export default function Dashboard() {
               <div className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 text-sm font-semibold shadow-lg shadow-violet-500/20">RL</div>
             </div>
           </header>
+
+          <Card className="mb-6 overflow-hidden border-violet-400/15 bg-gradient-to-br from-violet-950/70 via-slate-900/80 to-cyan-950/40">
+            <div className="grid gap-6 p-5 lg:grid-cols-[1.35fr_0.9fr]">
+              <div>
+                <div className="mb-4 flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-violet-100 ring-1 ring-white/[0.08]">
+                    <Sparkles className="h-3.5 w-3.5 text-violet-300" /> Daily Brief
+                  </span>
+                  <span className="text-xs text-slate-400">Generated {dailyBrief.generatedAt}</span>
+                  <span className="rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs font-medium text-emerald-300">{dailyBrief.confidence} confidence</span>
+                </div>
+                <p className="max-w-3xl text-lg font-medium leading-8 text-white sm:text-xl">{dailyBrief.headline}</p>
+
+                <div className="mt-5 grid gap-3 md:grid-cols-3">
+                  {dailyBrief.actions.map((action) => (
+                    <article key={action.title} className="rounded-2xl border border-white/[0.08] bg-slate-950/35 p-4">
+                      <div className={`mb-3 h-1.5 w-10 rounded-full bg-gradient-to-r ${action.tone === 'emerald' ? 'from-emerald-300 to-cyan-300' : action.tone === 'blue' ? 'from-blue-300 to-violet-300' : 'from-amber-300 to-orange-300'}`} />
+                      <h3 className="text-sm font-semibold text-white">{action.title}</h3>
+                      <p className="mt-2 text-xs leading-5 text-slate-400">{action.detail}</p>
+                      <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">{action.meta}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[1.1rem] border border-white/[0.08] bg-slate-950/40 p-4">
+                <SectionHeader title="Live-data readiness" subtitle="What needs wiring next" />
+                <div className="space-y-3">
+                  {dailyBrief.sourceHealth.map((source) => (
+                    <div key={source.name} className="rounded-2xl bg-white/[0.03] p-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="text-sm font-medium text-slate-100">{source.name}</div>
+                        <div className="text-xs font-semibold text-violet-300">{source.count}</div>
+                      </div>
+                      <div className="mt-1 flex items-center justify-between gap-3 text-xs text-slate-500">
+                        <span>{source.status}</span>
+                        <span>{source.freshness}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 rounded-2xl bg-violet-500/10 p-3 ring-1 ring-violet-400/15">
+                  <div className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-300">Next wiring pass</div>
+                  <ul className="mt-2 space-y-2 text-xs leading-5 text-slate-300">
+                    {realDataRoadmap.map((item) => <li key={item}>• {item}</li>)}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Card>
 
           <section className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
             {statCards.map((stat) => {
