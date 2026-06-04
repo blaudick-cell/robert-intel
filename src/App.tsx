@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { 
   Compass, LayoutDashboard, Calendar, Target, TrendingUp, 
-  Bell, User, RefreshCw 
+  Bell, User 
 } from 'lucide-react'
 
 function App() {
