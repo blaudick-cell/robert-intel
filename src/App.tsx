@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import { 
+  Compass, RefreshCw, Plus, TrendingUp, Clock, Target, 
+  AlertCircle, ArrowRight 
+} from 'lucide-react'
+import { motion } from 'framer-motion'
 
 function App() {
   const [lastUpdated, setLastUpdated] = useState('2m ago')
@@ -17,7 +22,7 @@ function App() {
             <div className="flex items-center gap-x-3">
               <div className="flex items-center gap-x-3">
                 <div className="w-9 h-9 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                  <span className="text-zinc-950 text-xl">🧭</span>
+                  <Compass className="w-5 h-5 text-zinc-950" />
                 </div>
                 <div>
                   <span className="font-semibold text-2xl tracking-tighter">Robert</span>
@@ -53,10 +58,12 @@ function App() {
               onClick={refreshData}
               className="px-5 py-2.5 text-sm font-medium flex items-center gap-x-2 bg-zinc-900 hover:bg-zinc-800 active:bg-zinc-950 border border-zinc-800 rounded-2xl transition-all"
             >
+              <RefreshCw className="w-4 h-4" />
               Refresh
             </button>
             <button className="px-6 py-2.5 text-sm font-semibold bg-white text-zinc-950 rounded-2xl flex items-center gap-x-2 hover:bg-zinc-100 active:bg-white transition-all shadow-lg">
-              + Add item
+              <Plus className="w-4 h-4" />
+              Add item
             </button>
           </div>
         </div>
@@ -72,7 +79,9 @@ function App() {
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-12 lg:col-span-7">
                 <div className="flex items-start gap-x-4">
-                  <div className="mt-1 text-2xl">💡</div>
+                  <div className="mt-1">
+                    <AlertCircle className="w-6 h-6 text-emerald-400" />
+                  </div>
                   <div className="flex-1">
                     <div className="font-semibold text-2xl tracking-tight">3 high-priority opportunities surfaced overnight</div>
                     <div className="text-zinc-400 mt-3 text-[15px] leading-relaxed max-w-[52ch]">
@@ -81,8 +90,9 @@ function App() {
                     </div>
                     <div className="mt-5 flex items-center gap-x-3">
                       <div className="px-4 py-1 bg-emerald-950 text-emerald-400 rounded-2xl text-xs font-medium tracking-wide">3 NEW ITEMS</div>
-                      <div className="text-emerald-400 text-sm font-medium cursor-pointer hover:underline flex items-center gap-x-1">
-                        View full briefing <span className="text-xs">→</span>
+                      <div className="text-emerald-400 text-sm font-medium cursor-pointer hover:underline flex items-center gap-x-1 group">
+                        View full briefing 
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                       </div>
                     </div>
                   </div>
@@ -110,7 +120,10 @@ function App() {
             </div>
             
             <div className="space-y-4">
-              <div className="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-3xl p-6 transition-all group">
+              <motion.div 
+                whileHover={{ y: -2 }}
+                className="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-3xl p-6 transition-all group cursor-pointer"
+              >
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="font-semibold text-xl tracking-tight">18,400 cy dirt haul — Central Denver</div>
@@ -126,9 +139,12 @@ function App() {
                   <div className="px-3 py-1 bg-zinc-800 rounded-2xl">4.2 mi</div>
                   <div className="px-3 py-1 bg-zinc-800 rounded-2xl">Feb 10–14</div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-3xl p-6 transition-all group">
+              <motion.div 
+                whileHover={{ y: -2 }}
+                className="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-3xl p-6 transition-all group cursor-pointer"
+              >
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="font-semibold text-xl tracking-tight">9,200 cy clean fill — Aurora</div>
@@ -144,7 +160,7 @@ function App() {
                   <div className="px-3 py-1 bg-zinc-800 rounded-2xl">11 mi</div>
                   <div className="px-3 py-1 bg-zinc-800 rounded-2xl">Feb 8–12</div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
