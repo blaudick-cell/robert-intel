@@ -1,6 +1,4 @@
-import { 
-  Compass, Target, TrendingUp, Bell, Calendar, User 
-} from 'lucide-react'
+import { Compass, User } from 'lucide-react'
 
 export default function Dashboard() {
   return (
